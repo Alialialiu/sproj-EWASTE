@@ -1,3 +1,13 @@
+<?php
+include '../../database/conn.php';
+session_start();
+session_regenerate_id(true);
+$ses_id = $_SESSION['usr_id'];
+if (empty($ses_id)) {
+    header('location: ../landing/index.php');
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,15 +17,18 @@
     <link href="../output.css" rel="stylesheet">
     <link rel="stylesheet" href="../../node_modules/boxicons/css/boxicons.min.css">
     <link rel="stylesheet" href="css/costum.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <script src="../../plugin/jquery.js"></script>
     <title>admin</title>
 
 </head>
 
 <body>
-    <div class="w-svw h-svh bg-[#FDE5D4] flex">
+    <div class="w-svw h-svh overflow-y-auto bg-[#FDE5D4] flex">
         <div class="lg:w-[18%] h-screen rounded-r-[20px] hidden bg-[#D6CC99] lg:flex flex-col p-2">
-            <a href="" class="btn btn-ghost text-xl text-center mt-3 text-white">E-WASTE</a>
+            <a href="" class="btn btn-ghost text-xl text-center mt-3 text-white font-semibold font-popin">E-WASTE</a>
             <ul class="flex flex-col mt-9">
                 <label class="input input-bordered input-sm flex items-center gap-2">
                     <input type="text" class="grow" placeholder="Search" />
@@ -23,15 +36,16 @@
                         <path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" />
                     </svg>
                 </label>
-                <a href="index.php" id="btncstm1" class="btn mt-2 btn-active btn-neutral">Home</a>
-                <a href="category.php" id="btncstm2" class="btn mt-2">Categories</a>
+                <a href="index.php" id="btncstm1" class="btn mt-2 btn-active btn-neutral font-semibold font-popin">Home</a>
+                <a href="donations.php" id="btncstm2" class="btn mt-2 font-semibold font-popin">Donations</a>
+                <a href="redemption.php" id="btncstm2" class="btn mt-2 font-semibold font-popin">Redemption</a>
             </ul>
         </div>
         <div class="lg:w-[82%] w-full h-svh">
-            <div class="w-auto bg-[#FDE5D4]">
+            <div class="w-auto bg-[#FDE5D4] sticky top-0 z-40">
                 <div class="navbar bg-transparent flex justify-between">
                     <div class="">
-                        <button class="btn btn-sm mx-2 text-sm" id="ctyAdd" onclick="ctyAddModal.showModal()"><i class='bx bx-category-alt'></i></i>Add Category</button>
+                        <button class="btn btn-sm mx-2 text-sm btn-ghost font-semibold font-popin" id="ctyAdd"><i class='bx bxs-dashboard'></i>Dashboard</button>
                     </div>
                     <div class=" gap-2">
                         <div class="indicator">
@@ -40,13 +54,13 @@
                             </svg>
                             <span class="badge badge-xs badge-primary indicator-item"></span>
                         </div>
-                        <div class="dropdown dropdown-end">
+                        <div class="dropdown dropdown-end px-0">
                             <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
                                 <div class="w-10 rounded-full">
                                     <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                                 </div>
                             </div>
-                            <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                            <ul tabindex="1" class="mt-3 z-10 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
                                 <li>
                                     <a class="justify-between">
                                         Profile
@@ -54,195 +68,101 @@
                                     </a>
                                 </li>
                                 <li><a>Settings</a></li>
-                                <li><a>Logout</a></li>
+                                <li><a href="php/logout.php">Logout</a></li>
                             </ul>
                         </div>
-                        <div class="">
-                            <a class="btn btn-ghost text-sm">Gorge Admin1</a>
+                        <div class="max-lg:hidden flex">
+                            <a class="btn btn-ghost text-sm p-1">Gorge Admin1</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="w-full contLstOvrf h-[90%] overflow-y-auto">
-                <div class="carousel carousel-center  max-w-full p-4  bg-neutral h-52 bg-transparent rounded-box">
-                    <div class=" flex space-x-4 overflow-x-auto cursor-grabbing carOverf max-w-full hover:overflow-x-auto pb-2">
-                        <div id="slide1" class="card carousel-item w-auto bg-base-100 shadow-xl">
-                            <figure class="px-2 pt-5 w-36">
-                                <img src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" class="rounded-box" />
-                            </figure>
+            <!-- start contents here total donations total redemption -->
+            <div class="lg:h-[90%] w-full">
+                <!-- right content -->
+                <div class=" w-full flex-col lg:flex-row p-2 lg:flex gap-2">
+                    <div class=" w-full">
+                        <div class="stats stats-vertical lg:stats-horizontal shadow">
 
-                        </div>
-                        <div id="slide2" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1565098772267-60af42b81ef2.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide3" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1572635148818-ef6fd45eb394.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide4" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1494253109108-2e30c049369b.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide5" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1550258987-190a2d41a8ba.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide6" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1559181567-c3190ca9959b.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide7" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide8" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide6" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1559181567-c3190ca9959b.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide7" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide8" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg" class="rounded-box" />
+                            <div class="stat">
+                                <div class="stat-figure text-primary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                    </svg>
+                                </div>
+                                <div class="stat-title">Total Donations</div>
+                                <div class="stat-value text-primary">200</div>
+                                <div class="stat-desc">21% more than last month</div>
+                            </div>
+
+                            <div class="stat">
+                                <div class="stat-figure text-secondary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                </div>
+                                <div class="stat-title">Redeemable Items</div>
+                                <div class="stat-value text-secondary">20</div>
+                                <div class="stat-desc">21% more than last month</div>
+                            </div>
+
+                            <div class="stat">
+                                <div class="stat-figure text-secondary">
+                                    <div class="avatar online">
+                                        <div class="w-16 rounded-full">
+                                            <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="stat-value">0</div>
+                                <div class="stat-title">Register User</div>
+                                <div class="stat-desc text-secondary">0 Active</div>
+                            </div>
+
                         </div>
                     </div>
-                </div>
-                <div class="carousel carousel-center relative max-w-full p-4  bg-neutral h-52 bg-transparent rounded-box">
-                    <div class=" flex space-x-4 overflow-x-auto carOverf max-w-full hover:overflow-x-auto pb-2">
-                        <div id="slide1" class="card carousel-item w-auto bg-base-100 shadow-xl">
-                            <figure class="px-2 pt-5 w-36">
-                                <img src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" class="rounded-box" />
-                            </figure>
 
-                        </div>
-                        <div id="slide2" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1565098772267-60af42b81ef2.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide3" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1572635148818-ef6fd45eb394.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide4" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1494253109108-2e30c049369b.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide5" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1550258987-190a2d41a8ba.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide6" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1559181567-c3190ca9959b.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide7" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide8" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide6" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1559181567-c3190ca9959b.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide7" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide8" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg" class="rounded-box" />
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel carousel-center relative max-w-full p-4  bg-neutral h-52 bg-transparent rounded-box">
-                    <div class=" flex space-x-4 overflow-x-auto carOverf max-w-full hover:overflow-x-auto pb-2">
-                        <div id="slide1" class="card carousel-item w-auto bg-base-100 shadow-xl">
-                            <figure class="px-2 pt-5 w-36">
-                                <img src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" class="rounded-box" />
-                            </figure>
-
-                        </div>
-                        <div id="slide2" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1565098772267-60af42b81ef2.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide3" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1572635148818-ef6fd45eb394.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide4" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1494253109108-2e30c049369b.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide5" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1550258987-190a2d41a8ba.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide6" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1559181567-c3190ca9959b.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide7" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide8" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide6" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1559181567-c3190ca9959b.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide7" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide8" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg" class="rounded-box" />
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel carousel-center relative max-w-full p-4  bg-neutral h-52 bg-transparent rounded-box">
-                    <div class=" flex space-x-4 overflow-x-auto carOverf max-w-full hover:overflow-x-auto pb-2">
-                        <div id="slide1" class="card carousel-item w-auto bg-base-100 shadow-xl">
-                            <figure class="px-2 pt-5 w-36">
-                                <img src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" class="rounded-box" />
-                            </figure>
-
-                        </div>
-                        <div id="slide2" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1565098772267-60af42b81ef2.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide3" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1572635148818-ef6fd45eb394.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide4" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1494253109108-2e30c049369b.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide5" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1550258987-190a2d41a8ba.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide6" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1559181567-c3190ca9959b.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide7" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide8" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide6" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1559181567-c3190ca9959b.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide7" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg" class="rounded-box" />
-                        </div>
-                        <div id="slide8" class="carousel-item">
-                            <img src="https://daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg" class="rounded-box" />
+                    <!-- left content -->
+                    <div class="w-full h-auto p-2">
+                        <div class="w-full card flex justify-center bg-base-100 shadow-xl">
+                            <div class="overflow-x-auto">
+                                <table class="table block">
+                                    <!-- head -->
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Date</th>
+                                            <th>Activity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- row 1 -->
+                                        <tr>
+                                            <th>1</th>
+                                            <td>Cy Ganderton</td>
+                                            <td>Quality Control Specialist</td>
+                                        </tr>
+                                        <!-- row 2 -->
+                                        <tr>
+                                            <th>2</th>
+                                            <td>Hart Hagerty</td>
+                                            <td>Desktop Support Technician</td>
+                                        </tr>
+                                        <!-- row 3 -->
+                                        <tr>
+                                            <th>3</th>
+                                            <td>Brice Swyre</td>
+                                            <td>Tax Accountant</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- modal dialogo -->
-    <dialog id="ctyAddModal" class="modal">
-        <div class="modal-box">
-            <form method="dialog">
-                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-            </form>
-            <h3 class="font-bold text-lg">Add Category</h3>
-            <form class="mt-2" action="" id="ctyform">
-                <label class="input input-bordered flex items-center gap-2">
-                    Category Name:
-                    <input type="text" name="ctyname" class="grow" placeholder="text input" />
-                </label>
-                <button type="submit" class="btn btn-primary btn-sm mt-2">add</button>
-            </form>
-        </div>
-    </dialog>
 </body>
 
 </html>

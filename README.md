@@ -1,2 +1,3 @@
 # sproj-EWASTE
- thesis
+This is for
+Admin Management Only

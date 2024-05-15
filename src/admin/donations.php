@@ -1,40 +1,81 @@
+<?php require_once '../../database/conn.php';
+session_start();
+session_regenerate_id(true);
+$ses_id = $_SESSION['usr_id'];
+if (empty($ses_id)) {
+    header('location: ../landing/index.php');
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- customs css -->
     <link href="../output.css" rel="stylesheet">
     <link rel="stylesheet" href="css/costum.css">
+    <!-- fonts npm box icon insert Ali -->
     <link rel="stylesheet" href="../../node_modules/boxicons/css/boxicons.min.css">
+    <!-- fontss -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- jquery plugin insert Ali -->
     <script src="../../plugin/jquery.js"></script>
     <title>admin</title>
 </head>
 
 <body>
     <div class="w-svw h-svh bg-[#FDE5D4] flex">
-        <div class="lg:w-[18%] h-screen rounded-r-[20px] hidden bg-[#D6CC99] lg:flex flex-col p-2">
+        <div class="lg:w-[18%] h-screen rounded-r-[20px] hidden bg-green-500 lg:flex flex-col p-2">
             <a href="" class="btn btn-ghost text-xl text-center mt-3 text-white font-semibold font-popin">E-WASTE</a>
-            <ul class="flex flex-col mt-9">
+            <ul class="menu flex flex-col mt-9">
                 <label class="input input-bordered input-sm flex items-center gap-2">
                     <input type="text" class="grow" placeholder="Search" />
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 opacity-70">
                         <path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" />
                     </svg>
                 </label>
-                <a href="index.php" id="btncstm1" class="btn mt-2 font-semibold font-popin ">Home</a>
-                <a href="donations.php" id="btncstm2" class="btn mt-2 btn-active btn-neutral font-semibold font-popin">Donations</a>
-                <a href="redemption.php" id="btncstm2" class="btn mt-2 font-semibold font-popin">Redemption</a>
+                <li>
+                    <a href="index.php" id="btncstm1" class="btn mt-2 justify-start font-semibold font-popin">
+                        <i class='bx bx-home-alt text-[27px] mr-8' style='color:#001524'></i>
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <span class="menu-dropdown-toggle btn-active btn-neutral mt-2 font-semibold font-popin"> <i class='bx bx-recycle text-[27px] mr-8' style='color:#ffffff'></i>E-waste</span>
+                    <ul class="menu-dropdown">
+                        <li class="mt-2">
+                            <a href="donations.php" id="btncstm2" calss="btn justify-start font-semibold font-popin">
+                                <i class='bx bx-category-alt mr-5 font-bold text-lg'></i>
+                                Categories</a>
+                        </li>
+                        <li class="">
+                            <a id="btnAddItem" calss=" btn justify-start font-semibold font-popin" onclick="addItemModal.showModal()">
+                                <i class='bx bx-list-plus mr-5 font-bold text-lg'></i>
+                                Add E-waste</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="redemption.php" id="btncstm2" class="btn mt-2 justify-start font-semibold font-popin">
+                        <i class='bx bx-gift  text-[27px] mr-8'></i>
+                        Redemption</a>
+                </li>
+
             </ul>
         </div>
         <div class="lg:w-[82%] w-full h-svh">
             <div class="w-auto bg-[#FDE5D4]">
                 <div class="navbar bg-transparent flex justify-between">
                     <div class="">
-                        <button class="btn btn-sm mx-2 text-sm font-semibold btn-ghost font-popin" id="ctyAdd" onclick="ctyAddModal.showModal()"><i class='bx bx-category-alt'></i></i>Add Category</button>
+                        <button class="btn btn-sm mx-2 text-sm font-semibold btn-ghost font-popin" id="ctyAdd" onclick="ctyAddModal.showModal()"><i class='bx bx-category-alt'></i>Add Category</button>
+                        <button class="btn btn-sm mx-2 text-sm font-semibold btn-ghost font-popin" id="btnAddItem" onclick="addItemModal.showModal()"><i class='bx bx-list-plus text-xl'></i>Add Item</button>
+
                     </div>
                     <div class=" gap-2">
                         <div class="indicator">
@@ -57,7 +98,7 @@
                                     </a>
                                 </li>
                                 <li><a>Settings</a></li>
-                                <li><a>Logout</a></li>
+                                <li><a href="php/logout.php">Logout</a></li>
                             </ul>
                         </div>
                         <div class="max-lg:hidden flex">
@@ -67,56 +108,54 @@
                 </div>
             </div>
             <div class="w-full contLstOvrf h-[90%] overflow-y-auto">
-                <div class="flex flex-col">
-                    <button class="btn ml-2 btn-ghost float-left btn-sm w-32 font-normal font-popin">keyboard >></button>
-                    <div class="carousel carousel-center  max-w-full p-4  bg-neutral h-52 bg-transparent rounded-box">
-                        <div class=" flex space-x-4 overflow-x-auto cursor-pointer carOverf max-w-full hover:overflow-x-auto pb-2">
-                            <div id="slide1" class="card carousel-item w-auto bg-base-100 shadow-xl">
-                                <figure class="px-2 pt-5 w-36">
-                                    <img src="../img/kb.jpg" alt="keyboard" class="rounded-box" />
-                                </figure>
-                                <button class="btn mx-2 bg-[#FDE5D4] btn-sm mt-4 flex items-center justify-center" onclick="infoItemModal.showModal()"><i class='bx bx-info-circle text-lg' style='color:#001524'></i>
-                                    <p>2802</p>
-                                </button>
-                            </div>
-                            <div id="slide2" class="carousel-item">
-                                <img src="https://daisyui.com/images/stock/photo-1565098772267-60af42b81ef2.jpg" class="rounded-box" />
-                            </div>
-                            <div id="slide3" class="carousel-item">
-                                <img src="https://daisyui.com/images/stock/photo-1572635148818-ef6fd45eb394.jpg" class="rounded-box" />
-                            </div>
-                            <div id="slide4" class="carousel-item">
-                                <img src="https://daisyui.com/images/stock/photo-1494253109108-2e30c049369b.jpg" class="rounded-box" />
-                            </div>
-                            <div id="slide5" class="carousel-item">
-                                <img src="https://daisyui.com/images/stock/photo-1550258987-190a2d41a8ba.jpg" class="rounded-box" />
-                            </div>
-                            <div id="slide6" class="carousel-item">
-                                <img src="https://daisyui.com/images/stock/photo-1559181567-c3190ca9959b.jpg" class="rounded-box" />
-                            </div>
-                            <div id="slide7" class="carousel-item">
-                                <img src="https://daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg" class="rounded-box" />
-                            </div>
-                            <div id="slide8" class="carousel-item">
-                                <img src="https://daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg" class="rounded-box" />
-                            </div>
-                            <div id="slide6" class="carousel-item">
-                                <img src="https://daisyui.com/images/stock/photo-1559181567-c3190ca9959b.jpg" class="rounded-box" />
-                            </div>
-                            <div id="slide7" class="carousel-item">
-                                <img src="https://daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg" class="rounded-box" />
-                            </div>
-                            <div id="slide8" class="carousel-item">
-                                <img src="https://daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg" class="rounded-box" />
-                            </div>
+                <?php
+                $category_query = $conn->query("SELECT * FROM tbl_category");
+                while ($category_data = mysqli_fetch_array($category_query)) {
+                ?>
+                    <div class="flex flex-col">
+                        <div>
+                            <button class="btn ml-2 btn-ghost float-left btn-sm w-auto font-normal font-popin tooltip tooltip-right tooltip-info " data-tip="view as a table" onclick="modalTableDnt.showModal()"><?php echo $category_data['cty_name'] ?> >></button>
                         </div>
+
+                        <div id="itemInfo_<?php echo $category_id ?>" class=" carousel carousel-center max-w-full p-4 gap-2 bg-neutral h-52 bg-transparent rounded-box">
+                            <?php
+                            // Fetch items belonging to the current category
+                            $item_query = $conn->query("SELECT * FROM tbl_ewst WHERE ewst_ctyfk = " . $category_data['cty_id']);
+                            while ($item_data = mysqli_fetch_array($item_query)) {
+                            ?>
+                                <div class=" flex space-x-4 overflow-x-auto cursor-pointer carOverf max-w-full hover:overflow-x-auto pb-2">
+
+                                    <div class="card carousel-item w-auto bg-base-100 shadow-xl">
+                                        <figure class="px-2 pt-5 w-36">
+                                            <img src="../img/kb.jpg" alt="keyboard" class="rounded-box" />
+                                        </figure>
+                                        <button class="btn btnItem mx-2 bg-[#FDE5D4] btn-sm mt-4 flex items-center justify-center" onclick="infoItemModal.showModal()" id="<?php echo $item_data['ewst_id'] ?>"><i class='bx bx-info-circle text-lg' style='color:#001524'></i>
+                                            <?php echo $item_data['ewst_name'] ?>
+                                        </button>
+                                    </div>
+
+                                </div>
+                            <?php
+                            }
+
+                            ?>
+                        </div>
+
                     </div>
-                </div>
+                <?php
+                }
+
+                ?>
             </div>
         </div>
     </div>
-    <?php include 'components/dialogs.php' ?>
+    <!--Ali< dialogs here -->
+    <dialog id="infoItemModal" class="modal">
+    </dialog>
+    <dialog id="addItemModal" class="modal">
+        <?php include 'components/dialogs/item.php' ?>
+    </dialog>
 </body>
 
 </html>
-<script src="js/script.js"></script>
+<script src=" js/script.js"></script>

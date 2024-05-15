@@ -27,18 +27,46 @@ if (empty($ses_id)) {
 
 <body>
     <div class="w-svw h-svh overflow-y-auto bg-[#FDE5D4] flex">
-        <div class="lg:w-[18%] h-screen rounded-r-[20px] hidden bg-[#D6CC99] lg:flex flex-col p-2">
-            <a href="" class="btn btn-ghost text-xl text-center mt-3 text-white font-semibold font-popin">E-WASTE</a>
-            <ul class="flex flex-col mt-9">
+        <div class="lg:w-[18%] h-screen rounded-r-[20px] hidden bg-green-500 lg:flex flex-col p-2">
+            <a href="" class="btn btn-ghost text-xl text-center mt-3 text-white font-semibold font-popin">
+                <i class='bx bx-recycle bx-flashing text-[27px]' style='color:#ffffff'></i>E-WASTE<i class='bx bx-recycle bx-flashing text-[27px]' style='color:#ffffff'></i>
+            </a>
+            <ul class="menu flex flex-col mt-9">
                 <label class="input input-bordered input-sm flex items-center gap-2">
                     <input type="text" class="grow" placeholder="Search" />
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 opacity-70">
                         <path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" />
                     </svg>
                 </label>
-                <a href="index.php" id="btncstm1" class="btn mt-2 btn-active btn-neutral font-semibold font-popin">Home</a>
-                <a href="donations.php" id="btncstm2" class="btn mt-2 font-semibold font-popin">Donations</a>
-                <a href="redemption.php" id="btncstm2" class="btn mt-2 font-semibold font-popin">Redemption</a>
+                <li>
+                    <a href="index.php" id="btncstm1" class="btn mt-2 justify-start btn-active btn-neutral font-semibold font-popin">
+                        <i class='bx bx-home-alt text-[27px] mr-8' style='color:#ffffff'></i>
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <span class="menu-dropdown-toggle btn justify-start mt-2 font-semibold font-popin "> <i class='bx bx-recycle text-[27px] mr-8'></i><span class="mr-8">E-waste </span></span>
+                    <ul class="menu-dropdown">
+                        <li class="mt-2">
+                            <a href="donations.php" id="btncstm2" calss="btn justify-start font-semibold font-popin">
+                                <i class='bx bx-category-alt mr-5 font-bold text-lg'></i>
+                                Categories</a>
+                        </li>
+                        <li class="">
+                            <a id="btnAddItem" calss=" btn justify-start font-semibold font-popin" onclick="addItemModal.showModal()">
+                                <i class='bx bx-list-plus mr-5 font-bold text-lg'></i>
+                                Add Items</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="redemption.php" id="btncstm2" class="btn mt-2 justify-start font-semibold font-popin">
+                        <i class='bx bx-gift  text-[27px] mr-8'></i>
+                        Redemption</a>
+                </li>
+
             </ul>
         </div>
         <div class="lg:w-[82%] w-full h-svh">
@@ -86,12 +114,10 @@ if (empty($ses_id)) {
 
                             <div class="stat">
                                 <div class="stat-figure text-primary">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                                    </svg>
+                                    <i class='bx bxs-component text-[40px]'></i>
                                 </div>
                                 <div class="stat-title">Total Donations</div>
-                                <div class="stat-value text-primary">200</div>
+                                <div class="stat-value text-primary">90</div>
                                 <div class="stat-desc">21% more than last month</div>
                             </div>
 
@@ -139,20 +165,20 @@ if (empty($ses_id)) {
                                         <!-- row 1 -->
                                         <tr>
                                             <th>1</th>
-                                            <td>Cy Ganderton</td>
-                                            <td>Quality Control Specialist</td>
+                                            <td>04/20/24 12:00</td>
+                                            <td>juan donated</td>
                                         </tr>
                                         <!-- row 2 -->
                                         <tr>
                                             <th>2</th>
-                                            <td>Hart Hagerty</td>
-                                            <td>Desktop Support Technician</td>
+                                            <td>04/20/24 12:00</td>
+                                            <td>juan registered</td>
                                         </tr>
                                         <!-- row 3 -->
                                         <tr>
                                             <th>3</th>
-                                            <td>Brice Swyre</td>
-                                            <td>Tax Accountant</td>
+                                            <td>04/20/24 12:00</td>
+                                            <td>juan Redeemed</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -163,6 +189,9 @@ if (empty($ses_id)) {
             </div>
         </div>
     </div>
+    <dialog id="addItemModal" class="modal">
+        <?php include 'components/dialogs/item.php' ?>
+    </dialog>
 </body>
 
 </html>

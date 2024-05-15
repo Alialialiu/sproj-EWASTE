@@ -36,7 +36,7 @@
         <div class="h-[90%] w-full lg:flex lg:flex-row flex-col">
             <div class="h-full w-full lg:w-[50%]">
                 <div class="Lg:w-full lg:h-full flex lg:items-center lg:justify-center max-lg:pt-28">
-                    <img alt="Tailwind CSS Navbar component" src="../img/bgLanding.png" />
+                    <img alt="Tailwind CSS Navbar component" src="../img/ewasteLand.png" />
                 </div>
             </div>
             <div class="h-full lg:w-[50%] w-full flex flex-col">

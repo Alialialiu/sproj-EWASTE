@@ -33,7 +33,7 @@
             <div class="w-auto bg-[#FDE5D4]">
                 <div class="navbar bg-transparent flex justify-between">
                     <div class="">
-                        <button class="btn btn-sm mx-2 text-sm btn-ghost font-semibold font-popin" id="ctyAdd"><i class='bx bxs-dashboard'></i>Redemption</button>
+                        <button class="btn btn-sm mx-2 text-sm btn-ghost font-semibold font-popin" id="ctyAdd"><i class='bx bxs-dashboard'></i>Catalogs</button>
                     </div>
                     <div class=" gap-2">
                         <div class="indicator">
@@ -56,7 +56,7 @@
                                     </a>
                                 </li>
                                 <li><a>Settings</a></li>
-                                <li><a>Logout</a></li>
+                                <li><a href="php/logout.php">Logout</a></li>
                             </ul>
                         </div>
                         <div class="max-lg:hidden flex">

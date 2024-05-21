@@ -7,7 +7,6 @@ $category = $conn->real_escape_string($_POST['category']);
 $info = $conn->real_escape_string($_POST['info']);
 $condition = $conn->real_escape_string($_POST['condition']);
 $points = intval($_POST['points']); // Ensure points is an integer
-
 // Prepare the response array
 $response = array();
 

@@ -24,6 +24,37 @@ if (empty($ses_id)) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <!-- jquery plugin insert Ali -->
     <script src="../../plugin/jquery.js"></script>
+    <script src="../../plugin/jquery-ui-1.13.3.custom/jquery-ui.js"></script>
+    <script src="../../plugin/jquery-ui-1.13.3.custom/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="../../plugin/jquery-ui-1.13.3.custom/jquery-ui.css">
+    <!-- datatables plugin ni Ali-->
+    <link rel="stylesheet" href="../../plugin/datatables/datatables.min.css">
+    <!-- animation.css import ni ali eh  -->
+    <link rel="stylesheet" href="../../node_modules/animate.css/animate.css">
+
+    <script src="../../plugin/datatables/datatables.min.js"></script>
+    <style>
+        .autocomplete-items {
+            border: 1px solid #d4d4d4;
+            border-bottom: none;
+            border-top: none;
+            z-index: 99;
+            position: absolute;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .autocomplete-item {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #fff;
+            border-bottom: 1px solid #d4d4d4;
+        }
+
+        .autocomplete-item:hover {
+            background-color: #e9e9e9;
+        }
+    </style>
     <title>admin</title>
 </head>
 
@@ -75,7 +106,6 @@ if (empty($ses_id)) {
                     <div class="">
                         <button class="btn btn-sm mx-2 text-sm font-semibold btn-ghost font-popin" id="ctyAdd" onclick="ctyAddModal.showModal()"><i class='bx bx-category-alt'></i>Add Category</button>
                         <button class="btn btn-sm mx-2 text-sm font-semibold btn-ghost font-popin" id="btnAddItem" onclick="addItemModal.showModal()"><i class='bx bx-list-plus text-xl'></i>Add Item</button>
-
                     </div>
                     <div class=" gap-2">
                         <div class="indicator">
@@ -107,14 +137,14 @@ if (empty($ses_id)) {
                     </div>
                 </div>
             </div>
-            <div class="w-full contLstOvrf h-[90%] overflow-y-auto">
+            <div class="w-full contLstOvrf h-[90%] overflow-y-auto" id="ctyHtml">
                 <?php
                 $category_query = $conn->query("SELECT * FROM tbl_category");
                 while ($category_data = mysqli_fetch_array($category_query)) {
                 ?>
                     <div class="flex flex-col">
                         <div>
-                            <button class="btn ml-2 btn-ghost float-left btn-sm w-auto font-normal font-popin tooltip tooltip-right tooltip-info " data-tip="view as a table" onclick="modalTableDnt.showModal()"><?php echo $category_data['cty_name'] ?> >></button>
+                            <button class="btn ml-2 btn-ghost float-left btn-sm w-auto font-normal font-popin tooltip tooltip-right tooltip-info btnTbl" data-tip="view as a table" onclick="modalTableDnt.showModal()" id="<?php echo $category_data['cty_id'] ?>"><?php echo $category_data['cty_name'] ?> >></button>
                         </div>
 
                         <div id="itemInfo_<?php echo $category_id ?>" class=" carousel carousel-center max-w-full p-4 gap-2 bg-neutral h-52 bg-transparent rounded-box">
@@ -154,6 +184,12 @@ if (empty($ses_id)) {
     </dialog>
     <dialog id="addItemModal" class="modal">
         <?php include 'components/dialogs/item.php' ?>
+    </dialog>
+    <dialog id="ctyAddModal" class="modal">
+        <?php include 'components/dialogs/categorys.php' ?>
+    </dialog>
+    <dialog id="modalTableDnt" class="modal">
+        <?php include 'components/dialogs/tables.php' ?>
     </dialog>
 </body>
 

@@ -62,9 +62,22 @@ if (empty($ses_id)) {
                 </li>
 
                 <li>
-                    <a href="redemption.php" id="btncstm2" class="btn mt-2 justify-start font-semibold font-popin">
-                        <i class='bx bx-gift  text-[27px] mr-8'></i>
-                        Redemption</a>
+                    <span class="menu-dropdown-toggle btn justify-start mt-2 font-semibold font-popin ">
+                        <i class='bx bx-gift text-[27px] mr-8'></i>
+                        <span class="mr-8">Rewards </span>
+                    </span>
+                    <ul class="menu-dropdown">
+                        <li class="mt-2">
+                            <a href="redemption.php" id="btncstm2" calss="btn justify-start font-semibold font-popin">
+                                <i class='bx bx-category-alt mr-5 font-bold text-lg'></i>
+                                Redemption items</a>
+                        </li>
+                        <li class="">
+                            <a id="btnAddItem" calss=" btn justify-start font-semibold font-popin" onclick="addItemModal.showModal()">
+                                <i class='bx bx-gift mr-5 font-bold text-lg'></i>
+                                Add Items</a>
+                        </li>
+                    </ul>
                 </li>
 
             </ul>

@@ -67,6 +67,7 @@ $(document).ready(function() {
         checkInputs();
         updatePreview();
     });
+
     
     $("#formSaveCty").submit(function(e) {
         e.preventDefault();

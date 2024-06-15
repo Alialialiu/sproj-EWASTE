@@ -80,12 +80,12 @@ if (empty($ses_id)) {
                     <span class="menu-dropdown-toggle btn-active btn-neutral mt-2 font-semibold font-popin"> <i class='bx bx-recycle text-[27px] mr-8' style='color:#ffffff'></i>E-waste</span>
                     <ul class="menu-dropdown">
                         <li class="mt-2">
-                            <a href="donations.php" id="btncstm2" calss="btn justify-start font-semibold font-popin">
+                            <a href="donations.php" id="btncstm2" class="font-normal font-popin">
                                 <i class='bx bx-category-alt mr-5 font-bold text-lg'></i>
                                 Categories</a>
                         </li>
                         <li class="">
-                            <a id="btnAddItem" calss=" btn justify-start font-semibold font-popin" onclick="addItemModal.showModal()">
+                            <a id="btnAddItem" class=" font-normal font-popin" onclick="addItemModal.showModal()">
                                 <i class='bx bx-list-plus mr-5 font-bold text-lg'></i>
                                 Add E-waste</a>
                         </li>
@@ -93,9 +93,22 @@ if (empty($ses_id)) {
                 </li>
 
                 <li>
-                    <a href="redemption.php" id="btncstm2" class="btn mt-2 justify-start font-semibold font-popin">
-                        <i class='bx bx-gift  text-[27px] mr-8'></i>
-                        Redemption</a>
+                    <span class="menu-dropdown-toggle btn justify-start mt-2 font-semibold font-popin ">
+                        <i class='bx bx-gift text-[27px] mr-8'></i>
+                        <span class="mr-8">Rewards </span>
+                    </span>
+                    <ul class="menu-dropdown">
+                        <li class="mt-2">
+                            <a href="redemption.php" id="btncstm2" class="font-normal font-popin">
+                                <i class='bx bx-category-alt mr-5 font-bold text-lg'></i>
+                                Redemption items</a>
+                        </li>
+                        <li class="">
+                            <a id="btnAddItem" class=" font-normal font-popin" onclick="addItemModal.showModal()">
+                                <i class='bx bx-gift mr-5 font-bold text-lg'></i>
+                                Add Items</a>
+                        </li>
+                    </ul>
                 </li>
 
             </ul>
@@ -142,20 +155,19 @@ if (empty($ses_id)) {
                 $category_query = $conn->query("SELECT * FROM tbl_category");
                 while ($category_data = mysqli_fetch_array($category_query)) {
                 ?>
-                    <div class="flex flex-col">
+                    <div class="flex flex-col ">
                         <div>
                             <button class="btn ml-2 btn-ghost float-left btn-sm w-auto font-normal font-popin tooltip tooltip-right tooltip-info btnTbl" data-tip="view as a table" onclick="modalTableDnt.showModal()" id="<?php echo $category_data['cty_id'] ?>"><?php echo $category_data['cty_name'] ?> >></button>
                         </div>
-
-                        <div id="itemInfo_<?php echo $category_id ?>" class=" carousel carousel-center max-w-full p-4 gap-2 bg-neutral h-52 bg-transparent rounded-box">
+                        <div id="itemInfo_<?php echo $category_id ?>" class=" carOverf overflow-x-auto hover:overflow-x-auto flex max-w-full p-2 gap-2   bg-neutral h-52 bg-transparent rounded-box">
                             <?php
                             // Fetch items belonging to the current category
                             $item_query = $conn->query("SELECT * FROM tbl_ewst WHERE ewst_ctyfk = " . $category_data['cty_id']);
                             while ($item_data = mysqli_fetch_array($item_query)) {
                             ?>
-                                <div class=" flex space-x-4 overflow-x-auto cursor-pointer carOverf max-w-full hover:overflow-x-auto pb-2">
+                                <div class=" flex space-x-4 cursor-pointer carOverf max-w-full  pb-2">
 
-                                    <div class="card carousel-item w-auto bg-base-100 shadow-xl">
+                                    <div class="card carousel-item w-auto  bg-base-100 shadow-xl">
                                         <figure class="px-2 pt-5 w-36">
                                             <img src="../img/kb.jpg" alt="keyboard" class="rounded-box" />
                                         </figure>

@@ -23,10 +23,10 @@
                         <img alt="Tailwind CSS Navbar component" src="../img/chmsuLg.png" />
                     </div>
                 </div>
-                <button class="btn btn-ghost lg:text-xl hidden lg:flex p-1 text-[#445D48]">Carlos Hilado Memorial State University</button>
+                <button class="btn btn-ghost lg:text-xl hidden lg:flex p-1 text-[#001524]">Carlos Hilado Memorial State University</button>
             </div>
             <div class="navbar-end">
-                <button class="btn btn-ghost text-xl font-popin font-bold text-[#445D48]">
+                <button class="btn btn-ghost text-xl font-popin font-bold text-[#001524]">
                     E-waste
                     <i class='bx bx-recycle'></i>
                 </button>
@@ -40,8 +40,8 @@
                 </div>
             </div>
             <div class="h-full lg:w-[50%] w-full flex flex-col">
-                <h1 class="text-[53px] font-bold font-popin mt-[27%] text-[#445D48] text-wrap">Techrecycle E-waste Management</h1>
-                <h2 class="font-popin font-medium text-[30px] text-[#323b34]">Welcome to Admin Panel</h2>
+                <h1 class="text-[53px] font-bold font-popin mt-[27%] text-[#001524] text-wrap">Techrecycle E-waste Management</h1>
+                <h2 class="font-popin font-medium text-[30px] text-[#FDE5D4]">Welcome to Admin Panel</h2>
                 <div class="flex flex-col w-auto lg:flex-row">
                     <button class="btn  btn-success w-32 grid place-items-center" onclick="my_modal_lgn.showModal()">Log-in</button>
                     <div class="divider lg:divider-horizontal"></div>

@@ -1,4 +1,4 @@
-<?php require_once '../../database/conn.php';
+<?php require_once '../../../../database/conn.php';
 session_start();
 session_regenerate_id(true);
 $ses_id = $_SESSION['usr_id'];
@@ -14,48 +14,38 @@ if (empty($ses_id)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- customs css -->
-    <link href="../output.css" rel="stylesheet">
+    <link href="../../../output.css" rel="stylesheet">
     <link rel="stylesheet" href="css/costum.css">
     <!-- fonts npm box icon insert Ali -->
-    <link rel="stylesheet" href="../../node_modules/boxicons/css/boxicons.min.css">
+    <link rel="stylesheet" href="../../../../node_modules/boxicons/css/boxicons.min.css">
     <!-- fontss -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <!-- jquery plugin insert Ali -->
-    <script src="../../plugin/jquery.js"></script>
+    <script src="../../../../plugin/jquery.js"></script>
     <script src="../../plugin/jquery-ui-1.13.3.custom/jquery-ui.js"></script>
     <script src="../../plugin/jquery-ui-1.13.3.custom/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="../../plugin/jquery-ui-1.13.3.custom/jquery-ui.css">
     <!-- datatables plugin ni Ali-->
-    <link rel="stylesheet" href="../../plugin/datatables/datatables.min.css">
+    <link rel="stylesheet" href="../../../../plugin/datatables/datatables.min.css">
     <!-- animation.css import ni ali eh  -->
     <link rel="stylesheet" href="../../node_modules/animate.css/animate.css">
 
-    <script src="../../plugin/datatables/datatables.min.js"></script>
+    <script src="../../../../plugin/datatables/datatables.min.js"></script>
+    <title>admin</title>
     <style>
-        .autocomplete-items {
-            border: 1px solid #d4d4d4;
-            border-bottom: none;
-            border-top: none;
-            z-index: 99;
-            position: absolute;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .autocomplete-item {
-            padding: 10px;
-            cursor: pointer;
-            background-color: #fff;
-            border-bottom: 1px solid #d4d4d4;
-        }
-
-        .autocomplete-item:hover {
-            background-color: #e9e9e9;
+        div.dt-container .dt-search input {
+            border: 1px solid #aaa;
+            border-radius: 7px;
+            padding: 2px 2px;
+            background-color: transparent;
+            color: inherit;
+            margin-left: 10px;
+            font-size: smaller;
         }
     </style>
-    <title>admin</title>
+
 </head>
 
 <body>
@@ -70,7 +60,7 @@ if (empty($ses_id)) {
                     </svg>
                 </label>
                 <li>
-                    <a href="index.php" id="btncstm1" class="btn mt-2 justify-start font-semibold font-popin">
+                    <a href="../../index.php" id="btncstm1" class="btn mt-2 justify-start font-semibold font-popin">
                         <i class='bx bx-home-alt text-[27px] mr-8' style='color:#001524'></i>
                         Home
                     </a>
@@ -83,12 +73,12 @@ if (empty($ses_id)) {
                     </span>
                     <ul class="menu-dropdown">
                         <li class="mt-2">
-                            <a href="donations.php" id="btncstm2" class="font-normal font-popin">
+                            <a href="../../donations.php" id="btncstm2" class="font-normal font-popin">
                                 <i class='bx bx-category-alt mr-5 font-bold text-lg'></i>
                                 Categories</a>
                         </li>
                         <li class="">
-                            <a id="btnAddItem" class="font-normal font-popin" onclick="addItemModal.showModal()">
+                            <a id="btnAddItem" class=" font-normal font-popin" onclick="addItemModal.showModal()">
                                 <i class='bx bx-list-plus mr-5 font-bold text-lg'></i>
                                 Add Items</a>
                         </li>
@@ -101,17 +91,17 @@ if (empty($ses_id)) {
                     </span>
                     <ul class="menu-dropdown">
                         <li class="mt-2">
-                            <a href="redemption.php" id="btncstm2" class="font-normal font-popin">
+                            <a href="../../redemption.php" id="btncstm2" class="font-normal font-popin">
                                 <i class='bx bx-category-alt mr-5 font-bold text-lg'></i>
                                 Redemption items</a>
                         </li>
                         <li class="">
-                            <a id="btnAddItem" class="font-normal font-popin" onclick="addRwdItemModal.showModal()">
+                            <a id="btnAddItem" class=" font-normal font-popin" onclick="addRwdItemModal.showModal()">
                                 <i class='bx bx-gift mr-5 font-bold text-lg'></i>
                                 Add Items</a>
                         </li>
                         <li class="">
-                            <a id="btnAddItem" href="components/pages/pendingRwd.php" class="font-normal font-popin">
+                            <a id="btnAddItem" href="#" class="font-normal font-popin">
                                 <i class='bx bx-revision mr-5 font-bold text-lg'></i>
                                 Pending Redemption</a>
                         </li>
@@ -124,8 +114,9 @@ if (empty($ses_id)) {
             <div class="w-auto bg-[#FDE5D4]">
                 <div class="navbar bg-transparent flex justify-between">
                     <div class="">
-                        <button class="btn btn-sm mx-2 text-sm font-semibold btn-ghost font-popin" id="ctyAdd" onclick="ctyAddModal.showModal()"><i class='bx bx-category-alt'></i>Add Category</button>
-                        <button class="btn btn-sm mx-2 text-sm font-semibold btn-ghost font-popin" id="btnAddItem" onclick="addRwdItemModal.showModal()"><i class='bx bx-gift text-xl'></i>Add Item</button>
+                        <button class="btn btn-sm mx-2 text-sm font-semibold btn-ghost font-popin" id="ctyAdd"><i class='bx bx-category-alt'></i>
+                            Pending Redemption</button>
+
                     </div>
                     <div class=" gap-2">
                         <div class="indicator">
@@ -158,33 +149,66 @@ if (empty($ses_id)) {
                 </div>
             </div>
             <div class="w-full contLstOvrf h-[90%] overflow-y-auto" id="ctyHtml">
-                <div class="flex flex-col">
-                    <div>
-                        <button class="btn ml-2 btn-ghost float-left btn-sm w-auto font-normal font-popin tooltip tooltip-right tooltip-info btnTbl" data-tip="view as a table" onclick="modalTableDnt.showModal()" id="">Category</button>
-                    </div>
+                <div class="flex flex-col card">
 
-                    <div id="itemInfo" class=" carousel carousel-center max-w-full p-4 gap-2 bg-neutral h-52 bg-transparent rounded-box">
-                        <?php
-                        // Fetch items belonging to the current category
-                        // add this after category items implement
-                        // WHERE ewst_ctyfk = " . $category_data['cty_id']
-                        $item_query = $conn->query("SELECT * FROM tbl_catalog");
-                        while ($item_data = mysqli_fetch_array($item_query)) {
-                        ?>
-                            <div class=" flex space-x-4 overflow-x-auto cursor-pointer carOverf max-w-full hover:overflow-x-auto pb-2">
-                                <div class="card carousel-item w-32 bg-base-100 shadow-xl">
-                                    <figure class="self-center w-32">
-                                        <img src="../img/gift.png" alt="gift box" class="rounded-box" />
-                                    </figure>
-                                    <button class="btn btnRwdItem mx-2 bg-[#FDE5D4] btn-sm  flex flex-row items-center justify-center" onclick="infoItemRwdModal.showModal()" id="<?php echo $item_data['ctg_id'] ?>">
-                                        <?php echo $item_data['ctg_name'] ?>
-                                    </button>
-                                </div>
-                            </div>
-                        <?php
-                        }
-                        ?>
-                    </div>
+                    <table id="dataTbl" class="table">
+                        <!-- head -->
+                        <thead>
+                            <tr>
+                                <th>User Id</th>
+                                <th>User Name</th>
+                                <th>Redeemed Item</th>
+                                <th>Redeemed Points</th>
+                                <th>Status</th>
+                                <th>Request Date</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- getting id from jquery shet -->
+                            <?php
+
+                            $query = $conn->query("SELECT rqs.*, user.usr_fname, user.usr_id, user.usr_lname, ctg.ctg_name, ctg.ctg_points FROM tbl_request AS rqs INNER JOIN tbl_user AS user ON rqs.rqs_usrId = user.usr_id INNER JOIN tbl_catalog AS ctg ON rqs.rqs_ctgFk = ctg.ctg_id");
+                            while ($data = mysqli_fetch_array($query)) {
+                                $userFname = $data['usr_fname'];
+                                $userLname = $data['usr_lname'];
+                                $points = $data['ctg_points'];
+                                $itemName = $data['ctg_name'];
+                                $userId = $data['usr_id'];
+                                $dateAdd = $data['rqs_dateAdd'];
+                                $status = $data['rqs_stats'];
+
+                                if ($status == 1) {
+                                    $stat = 'Pending';
+                                } else {
+                                    $stat = 'Decline';
+                                };
+                                // $itemName = $data[''];
+                            ?>
+                                <tr id="tr_<?php echo $data['rqs_id'] ?>" class=" hover">
+                                    <th><?php echo $userId ?></th>
+                                    <td><?php echo $userFname ?> <?php echo $userLname ?></td>
+                                    <td><?php echo $itemName ?></td>
+                                    <td><?php echo $points ?></td>
+                                    <td><?php echo $stat ?></td>
+                                    <td><?php echo $dateAdd ?></td>
+                                    <td>
+                                        <div class="tooltip accept" data-tip="Accept">
+                                            <button class="btn btn-ghost btn-xs acceptRwd" id="<?php echo $data['rqs_id'] ?>" data-usr-id="<?php echo $userId ?>" data-points="<?php echo $points ?>">
+                                                <i class='text-lg bx bx-check-circle'></i>
+                                            </button>
+                                        </div>
+                                        <div class="tooltip decline" data-tip="Decline" id="<?php echo $data['rqs_id'] ?>" data-usr-id="<?php echo $userId ?>">
+                                            <button class="btn btn-ghost btn-xs">
+                                                <i class='bx bx-x-circle text-lg text-red-700'></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -202,4 +226,4 @@ if (empty($ses_id)) {
 </body>
 
 </html>
-<script src="js/scriptRwd.js"></script>
+<script src="../../js/scriptRwd.js"></script>
